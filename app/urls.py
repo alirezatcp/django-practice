@@ -4,5 +4,5 @@ from app.views import welcome, index
 
 urlpatterns = [
     path('say/welcome/', welcome),
-    path('<str:first_name>/<str:last_name>/<int:age>/', index)
+    path('<str:name>/<int:age>/<slug:slug>/<uuid:uuid>/<path:path>/', index)
 ]
