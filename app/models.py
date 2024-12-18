@@ -77,7 +77,7 @@ class Post(models.Model):
 # User.objects.exclude(username='Alireza') # returns a queryset from all objects except that have given conditions. opposite filter.
 
 # order_by()
-# User.objects.order_by('gender') # retuturns a queryset from all objects order by 'gender'. we can use '-gender' to reverse this list.
+# User.objects.order_by('gender') # retuturns a queryset from all objects order by 'gender' (ascending). we can use '-gender' to reverse this list (descending).
 
 # count()
 # User.objects.count() # returns an integer that count User objects.
@@ -117,3 +117,33 @@ class Post(models.Model):
 
 # in
 # User.objects.filter(id__in=[1,4,6]) # return users with given id list.
+
+
+# Aggregate functions
+
+# import to use them
+# from django.db.models import *
+# from django.db.models import Avg, Sum, Max, Min 
+
+# Avg
+# User.objects.aggregate(Avg('score')) # return an average from scores in User objects. example output: {'score__avg': 9.8}
+# User.objects.aggregate(average_score=Avg('score')) # we can set keys name too. output: {'average_score': 9.8}
+
+# Cpunt
+# User.objects.aggregate(Count('score')) # return number of objects that have score. example output: {'score__count': 12}
+# User.objects.aggregate(scores=Count('score')) # we can set keys name too. example output: {'scores': 12}
+
+# Max
+# User.objects.aggregate(Max('score')) # return max score of objects that have score. example output: {'score__max': 20}
+# User.objects.aggregate(maximum=Max('score')) # we can set keys name too. example output: {'maximum': 20}
+
+# Min
+# User.objects.aggregate(Min('score')) # return min score of objects that have score. example output: {'score__min': 2}
+# User.objects.aggregate(minimum=Min('score')) # we can set keys name too. example output: {'minimum': 2}
+
+# Sum 
+# User.objects.aggregate(Sum('score')) # return all object scores sum. example output: {'score__sum': 200}
+# User.objects.aggregate(sumation=Sum('score')) # we can set keys name too. example output: {'sumation': 200}
+
+# we can mix them:
+# User.objects.aggregate(average_score=Avg('score'), maximum=Max('score'), minimum=Min('score')) # {'average_score': 9.8, 'maximum': 20, 'minimum': 2}
