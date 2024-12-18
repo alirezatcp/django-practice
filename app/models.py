@@ -59,3 +59,23 @@ class Post(models.Model):
 
 # delete()
 # user.delete() # delete that user object we created
+
+
+# django ORM:
+
+# User.objects.all() # returns a queryset from all objects of User.
+
+# User.objects.filter(username='Alireza') # returns a queryset from all objects that have given conditions.
+
+# user1 = User.objects.get(username='Alireza') # returns an object from User that have given conditions.
+# user1.email # now we can have access to user1 fields like this.
+
+# User.objects.exclude(username='Alireza') # returns a queryset from all objects except that have given conditions. opposote filter.
+
+# User.objects.order_by('gender') # retuturns a queryset from all objects order by 'gender'. we can use '-gender' to reverse this list.
+
+# User.objects.count() # returns an integer that count User objects.
+
+# User.objects.all().values() # returns a list from dicts that have User objects with all content. we can write in values what fields we want: User.objects.all().values('username', 'gender')
+
+# User.objects.all().values_list.('id', 'username') # returns a list from tuples that have given fiels inside. if we just needed 'username' we could use flat in values_list: User.objects.all().values_list.('username', flat=True)
