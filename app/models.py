@@ -119,7 +119,7 @@ class Post(models.Model):
 # User.objects.filter(id__in=[1,4,6]) # return users with given id list.
 
 
-# Aggregate functions
+# Aggregate Functions
 
 # import to use them
 # from django.db.models import *
@@ -147,3 +147,14 @@ class Post(models.Model):
 
 # we can mix them:
 # User.objects.aggregate(average_score=Avg('score'), maximum=Max('score'), minimum=Min('score')) # {'average_score': 9.8, 'maximum': 20, 'minimum': 2}
+
+
+# F and Q 
+
+# from django.db.models import F, Q
+
+# if we want to compare fields of one object, we should use F object. for example we have Student class with fields: name, math_score, physics_score. we want to find whoese math_score is grater than physics_score:
+# Student.object.filter(math_score__gt=F('physics_score'))
+
+# we can do logical operations with Q object. for example we want to see students that pass math or physycs:
+# Student.objects.filter(Q(math_score__gte=10) | Q(physics_score__gte=10)) # and: &, or: |, not:~
