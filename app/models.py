@@ -63,19 +63,57 @@ class Post(models.Model):
 
 # django ORM:
 
+# all()
 # User.objects.all() # returns a queryset from all objects of User.
 
+# filter()
 # User.objects.filter(username='Alireza') # returns a queryset from all objects that have given conditions.
 
+# get()
 # user1 = User.objects.get(username='Alireza') # returns an object from User that have given conditions.
 # user1.email # now we can have access to user1 fields like this.
 
-# User.objects.exclude(username='Alireza') # returns a queryset from all objects except that have given conditions. opposote filter.
+# exclude()
+# User.objects.exclude(username='Alireza') # returns a queryset from all objects except that have given conditions. opposite filter.
 
+# order_by()
 # User.objects.order_by('gender') # retuturns a queryset from all objects order by 'gender'. we can use '-gender' to reverse this list.
 
+# count()
 # User.objects.count() # returns an integer that count User objects.
 
+# values()
 # User.objects.all().values() # returns a list from dicts that have User objects with all content. we can write in values what fields we want: User.objects.all().values('username', 'gender')
 
-# User.objects.all().values_list.('id', 'username') # returns a list from tuples that have given fiels inside. if we just needed 'username' we could use flat in values_list: User.objects.all().values_list.('username', flat=True)
+# values_list()
+# User.objects.all().values_list('id', 'username') # returns a list from tuples that have given fiels inside. if we just needed 'username' we could use flat in values_list: User.objects.all().values_list('username', flat=True)
+
+
+# Field Lookups
+
+# exact (if we use iexact ali=ALI): default
+# Post.objects.filter(writer__username__exact='sajjad') # queryset of Posts that writer is sajjad.
+
+# contains or icontains
+# Post.objects.filter(content__contains='sajj') # return querysets that have sajj in content field.
+
+# lt
+# User.objects.filter(score__lt=3) # if we had score field in User model, it will return all users have score lower than 3.
+
+# lte
+# User.objects.filter(score__lte=3) # like lt just this shows equals too.
+
+# gt 
+# User.objects.filter(score__gt=3) # opposite of lt.
+
+# gte 
+# User.objects.filter(score__gte=3) # like gt just this shows equals too.
+
+# startswith or istartswith
+# User.objects.filter(username__startswith='ad') # return Users that usernames starts with 'ad' like 'admin'.
+
+# endswith or iendswith
+# User.objects.filter(username__endswith='n') # return Users that usernames ends with 'n' like 'admin'.
+
+# in
+# User.objects.filter(id__in=[1,4,6]) # return users with given id list.
