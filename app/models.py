@@ -1,5 +1,14 @@
 from django.db import models
 
+# we want to create a manager to User class that have a func to show male and premium clients in a queryset and we dont filter permanently.
+class UserManager(models.Manager):
+    def male_premium_clients(self):
+        return self.filter(
+            gender='male',
+            account_type='Premium'
+        )
+
+
 class User(models.Model):
     
     GENDER_CHOICES = (
@@ -18,6 +27,9 @@ class User(models.Model):
     signing_date = models.DateTimeField()
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     account_type = models.CharField(max_length=10, choices=TYPE_CHOICES)
+
+    # import our manage with name objects:
+    objects = UserManager() # now we can use User.objects.male_premium_clients()
 
     # a function to change account_type when we call it.
     def change_account_type(self):
