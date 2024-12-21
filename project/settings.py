@@ -122,9 +122,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-# we can use them on templates like this (for example our static file is in: library/static/libraryhome.css):
+# we can use them on templates like this (for example our static file is in: library/static/library/libraryhome.css):
 # {% load static %}
-# <link rel="stylesheet" type="text/css" href="{% static 'libraryhome.css' %}">
+# <link rel="stylesheet" type="text/css" href="{% static 'library/libraryhome.css' %}">
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'), # we can add our static files path here
 ]
