@@ -19,7 +19,7 @@ def add_book(request):
     if request.method == 'GET':
         form = BookForm()
         context = {'form' : form}
-        return render(request, 'add_book.html', context)
+        return render(request, 'add_book.html', context=context)
         # books = Book.objects.all()
         # context = {'books': books}
         # return render(request, 'books_list.html', context=context)
@@ -27,9 +27,10 @@ def add_book(request):
     elif request.method == 'POST':
         form = BookForm(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
-            book = Book(author=data['author'], title=data['title'])
-            book.save()
+            data = form.cleaned_data # if we use modelfield we dont want this line
+            book = Book(author=data['author'], title=data['title']) # if we use modelfield we dont want this line
+            book.save() # if we use modelfield we dont want this line
+            # book = form.save() # if we use model form we use this line instead of above lines.
             return HttpResponse(book, status=201)
 
         return HttpResponse('Error', status=400)

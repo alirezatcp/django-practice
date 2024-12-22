@@ -1,5 +1,7 @@
 from django import forms
 
+from library.models import Book
+
 class BookForm(forms.Form):
     author = forms.CharField()
     title = forms.CharField()
@@ -14,3 +16,9 @@ class BookForm(forms.Form):
             raise forms.ValidationError(message)
 
         return author 
+
+
+class BookModelForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ('author', 'title',)
