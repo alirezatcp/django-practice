@@ -7,6 +7,15 @@
 {% block content %}
     <p>This is books_list.html</p>
     {% for book in books %}
-        {{ book.author }} write {{ book.title }}
+        {{ book.author }} write {{ book.title|lower|truncatewords:2|default:"empty" }}
     {% endfor %}
 {% endblock %}
+
+<!-- we add filters in this section: {{ book.title|lower|truncatewords:2|default:"empty" }}
+
+filters:
+lower -> to lower case our string.
+length -> gives str or list length.
+filesizeformat -> make size human readable.
+reuncatewords:2 -> just shows 2 words (if it was more it set ... after 2 word)
+default:"empty" -> if variable was false or null we will see "empty" -->
