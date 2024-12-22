@@ -17,9 +17,12 @@ def books_list(request):
 
 def add_book(request):
     if request.method == 'GET':
-        books = Book.objects.all()
-        context = {'books': books}
-        return render(request, 'books_list.html', context=context)
+        form = BookForm()
+        context = {'form' : form}
+        return render(request, 'add_book.html', context)
+        # books = Book.objects.all()
+        # context = {'books': books}
+        # return render(request, 'books_list.html', context=context)
 
     elif request.method == 'POST':
         form = BookForm(request.POST)
