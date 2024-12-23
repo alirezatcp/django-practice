@@ -55,3 +55,18 @@ class UserDeleteView(DeleteView):
     model = User
     template_name = 'delete.html' # default tamplate name is: cvb/User_confirm_delete.html. it sends 'object' to template.
     success_url = reverse_lazy('cbv') # cbv is name we choose for this url.
+
+
+# we can use mixins to abort using duplicate functions.
+class HelloMixin:
+    model = None
+    template = None
+
+    def get(self, request):
+        return HttpResponse('Hello Mixin')
+
+# we used mixin in below classes.
+class Mixin1(HelloMixin, View):
+    pass
+class Mixin2(HelloMixin, View):
+    pass
