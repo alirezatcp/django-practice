@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
+from django.urls import reverse_lazy
 
 from cbv.models import User
 from cbv.forms import UserCreateForm
 
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView, DeleteView
 
 class MyView(View):
     def get(self, request):
@@ -49,3 +50,8 @@ class UserCreateFormView(FormView): # FormView is use to just show a form.
     # def form_valid(self, form):
     #     form.send_email() # send_email is a func that we should create inside form.
     #     return super().form_valid(form)
+
+class UserDeleteView(DeleteView):
+    model = User
+    template_name = 'delete.html' # default tamplate name is: cvb/User_confirm_delete.html. it sends 'object' to template.
+    success_url = reverse_lazy('cbv') # cbv is name we choose for this url.
