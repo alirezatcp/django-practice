@@ -25,4 +25,6 @@ urlpatterns = [
     path('', include('app.urls')),
 
     path('', include('library.urls')),
+
+    path('', include('cbv.urls')),
 ]
