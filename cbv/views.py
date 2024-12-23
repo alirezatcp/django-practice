@@ -5,7 +5,7 @@ from django.views import View
 from cbv.models import User
 from cbv.forms import UserCreateForm
 
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView
 
 class MyView(View):
     def get(self, request):
@@ -29,6 +29,7 @@ class UserDetailView(DetailView):
 class UserCreateView(CreateView):
     template_name = 'create.html'
     form_class = UserCreateForm
+    success_url = '/cbv/' # when succeed go to this page
 
     # we want to add initial value for email field.
     def get_initial(self, *args, **kwargs):
@@ -37,3 +38,14 @@ class UserCreateView(CreateView):
         return initial
 
 # UpdateView is just like CreateView.
+
+
+class UserCreateFormView(FormView): # FormView is use to just show a form.
+    template_name = 'create.html'
+    form_class = UserCreateForm
+    success_url = '/cvb/' # when succeed go to this page
+
+    # # this method is called when valied form data has been POSTed.
+    # def form_valid(self, form):
+    #     form.send_email() # send_email is a func that we should create inside form.
+    #     return super().form_valid(form)
