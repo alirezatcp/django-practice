@@ -46,4 +46,4 @@ class BookAdmin(admin.ModelAdmin):
             request, f'{updated} books page added with two', messages.SUCCESS
         )
 
-    add_pages.short_description = 'Add two page to selected books.'
+    add_pages.short_description = 'Add two page to selected books.' # add a description to action. default is method name. (here 'Add pages'.)
