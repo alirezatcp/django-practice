@@ -42,7 +42,7 @@ class BookAdmin(admin.ModelAdmin):
     # this is a function to add pages_count +2 when we use it.
     def add_pages(self,request,queryset):
         updated = queryset.update(pages_count = F('pages_count') + 2)
-        self.message_user(
+        self.message_user( # message we will see after success.
             request, f'{updated} books page added with two', messages.SUCCESS
         )
 

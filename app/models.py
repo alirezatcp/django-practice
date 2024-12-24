@@ -69,6 +69,9 @@ class Post(models.Model):
 # user = User(username="john_doe", email="john.doe@example.com", signing_date=timezone.now(), gender='m', account_type='R') # create an object from User class
 # user.save() # save user in database
 
+# update()
+# user.update(username="new_john_doe") # update that user object we created
+
 # delete()
 # user.delete() # delete that user object we created
 
