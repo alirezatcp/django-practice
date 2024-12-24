@@ -1,5 +1,5 @@
-from django.contrib import admin
-
+from django.contrib import admin, messages
+from django.db.models import F
 from administrator.models import Author, Book
 
 # created a superuser with this command: python manage.py createsuperuser
@@ -27,4 +27,23 @@ class AuthorAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'public_date', 'pages_count']
+    fieldsets = (
+        ('General Info', { # set General Info as title and set these fields inside it.
+        'fields': ('title', 'public_date')
+    }),
+    ('Details', { # set Details as title and set these fields inside it.
+        'classes': ('collapse',), # this is a css feature that hide content and we should click to show
+        'fields': ('pages_count', 'author')
+    })
+    )
+    
+    actions = ['add_pages'] # add an action to do something (Delete selected books is default action and we add this action too).
+
+    # this is a function to add pages_count +2 when we use it.
+    def add_pages(self,request,queryset):
+        updated = queryset.update(pages_count = F('pages_count') + 2)
+        self.message_user(
+            request, f'{updated} books page added with two', messages.SUCCESS
+        )
+
+    add_pages.short_description = 'Add two page to selected books.'
