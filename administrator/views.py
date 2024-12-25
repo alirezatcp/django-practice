@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
 from django.contrib.auth.decorators import login_required, permission_required
 
 from administrator.forms import SignUpForm, BookForm
+from administrator.models import Book
 
 @csrf_exempt
 def signup(request):
@@ -85,6 +86,23 @@ def add_book(request):
         if form.is_valid():
             form.save()
             return HttpResponse('Book added successfully.')
+
+        return HttpResponse(f'{form.errors}')
+
+    return HttpResponse('Only post method allowed.')
+
+
+# we should go to admin panel and select our user and go to User permissions and select "administrator | book | Can add book" to this user can change book.
+@login_required(login_url='/login/')
+@permission_required('administrator.change_book', raise_exception=True) # administrator: app name and add_book a code name.
+@csrf_exempt
+def change_book(request, book_id):
+    if request.method == 'POST':
+        book = get_object_or_404(Book, id = book_id)
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('Book information updated.')
 
         return HttpResponse(f'{form.errors}')
 
