@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from administrator.views import signup
 # from app.views import welcome
 
 urlpatterns = [
@@ -27,4 +28,6 @@ urlpatterns = [
     path('', include('library.urls')),
 
     path('', include('cbv.urls')),
+
+    path('signup/', signup),
 ]
