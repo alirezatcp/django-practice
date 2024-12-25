@@ -120,3 +120,15 @@ def view_book(request, book_id):
         return HttpResponse(f'{model_to_dict(book)}') # shows models field in dict form
     return HttpResponse('Only get method allowed.')
 
+
+# we should go to admin panel and select our user and go to User permissions and select "administrator | book | Can add book" to this user can delete book.
+@login_required(login_url='/login/')
+@permission_required('administrator.delete_book', raise_exception=True) 
+@csrf_exempt
+def delete_book(request, book_id):
+    if request.method == 'DELETE':
+        book = get_object_or_404(Book, id=book_id)
+        book.delete()
+        return HttpResponse('Book deleted successfully!')
+
+    return HttpResponse('Only delete method allowed.')
