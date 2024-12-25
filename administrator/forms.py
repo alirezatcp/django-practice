@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
-from administrator.models import Profile
+from administrator.models import Profile, Book
 
 class SignUpForm(UserCreationForm):
     country = forms.CharField(max_length=100)
@@ -15,3 +15,8 @@ class SignUpForm(UserCreationForm):
         user = super().save(commit=commit)
         Profile.objects.create(user=user, country=self.data['country'])
         return user
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = '__all__'

@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from administrator.views import signup, login, change_password, logout
+# from administrator.views import signup, login, change_password, logout
 # from app.views import welcome
 
 urlpatterns = [
@@ -29,8 +29,5 @@ urlpatterns = [
 
     path('', include('cbv.urls')),
 
-    path('signup/', signup),
-    path('login/', login),
-    path('passwd/', change_password),
-    path('logout/', logout),
+    path('', include('administrator.urls')),
 ]

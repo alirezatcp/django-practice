@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
-from administrator.forms import SignUpForm
+from administrator.forms import SignUpForm, BookForm
 
 @csrf_exempt
 def signup(request):
@@ -71,5 +71,21 @@ def logout(request):
         dj_logout(request)
 
         return HttpResponse('Log out successfully!')
+
+    return HttpResponse('Only post method allowed.')
+
+
+# we should go to admin panel and select our user and go to User permissions and select "administrator | book | Can add book" to this user can add book.
+@login_required(login_url='/login/')
+@permission_required('administrator.add_book', raise_exception=True) # administrator: app name and add_book a code name.
+@csrf_exempt
+def add_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('Book added successfully.')
+
+        return HttpResponse(f'{form.errors}')
 
     return HttpResponse('Only post method allowed.')
