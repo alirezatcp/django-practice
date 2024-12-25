@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
+from django.contrib.auth.decorators import login_required
 
 from administrator.forms import SignUpForm
 
@@ -57,11 +58,15 @@ def change_password(request):
 
     return HttpResponse('Only post method allowed.')
 
+
 @csrf_exempt
+@login_required(login_url='/login/') # check login and if user is not login go to /login/ page
 def logout(request):
     if request.method == 'POST':
-        if not request.user.is_authenticated:
-            return HttpResponse('Please login first.')
+
+        # we used decorator instead this:
+        # if not request.user.is_authenticated:
+        #     return HttpResponse('Please login first.')
 
         dj_logout(request)
 
