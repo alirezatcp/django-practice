@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
 from django.contrib.auth.decorators import login_required, permission_required
+from django.forms.models import model_to_dict
 
 from administrator.forms import SignUpForm, BookForm
 from administrator.models import Book
@@ -94,7 +95,7 @@ def add_book(request):
 
 # we should go to admin panel and select our user and go to User permissions and select "administrator | book | Can add book" to this user can change book.
 @login_required(login_url='/login/')
-@permission_required('administrator.change_book', raise_exception=True) # administrator: app name and add_book a code name.
+@permission_required('administrator.change_book', raise_exception=True) 
 @csrf_exempt
 def change_book(request, book_id):
     if request.method == 'POST':
@@ -107,3 +108,15 @@ def change_book(request, book_id):
         return HttpResponse(f'{form.errors}')
 
     return HttpResponse('Only post method allowed.')
+
+
+# we should go to admin panel and select our user and go to User permissions and select "administrator | book | Can add book" to this user can view book.
+@login_required(login_url='/login/')
+@permission_required('administrator.view_book', raise_exception=True) 
+@csrf_exempt
+def view_book(request, book_id):
+    if request.method == 'GET':
+        book = get_object_or_404(Book, id=book_id)
+        return HttpResponse(f'{model_to_dict(book)}') # shows models field in dict form
+    return HttpResponse('Only get method allowed.')
+
