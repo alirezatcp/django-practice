@@ -33,3 +33,27 @@ def login(request):
         return HttpResponse('Wrong password or username!')
 
     return HttpResponse('Please login with post method.')
+
+@csrf_exempt
+def change_password(request):
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return HttpResponse('Please login first.')
+
+        old_password = request.POST['old_password']
+        new_password1 = request.POST['new_password1']
+        new_password2 = request.POST['new_password2']
+
+        if not request.user.check_password(old_password):
+            return HttpResponse('Wrong old password.')
+        
+        if new_password1 != new_password2:
+            return HttpResponse('Entered passwords are not identical.')
+
+        request.user.set_password(new_password1)
+        request.user.save()
+
+        return HttpResponse('Password change successfully!')
+
+    return HttpResponse('Only post method allowed.')
+
