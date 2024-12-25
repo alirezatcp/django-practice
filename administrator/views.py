@@ -93,7 +93,7 @@ def add_book(request):
     return HttpResponse('Only post method allowed.')
 
 
-# we should go to admin panel and select our user and go to User permissions and select "administrator | book | Can add book" to this user can change book.
+# we should go to admin panel and select our user and go to User permissions and select "administrator | book | Can change book" to this user can change book.
 @login_required(login_url='/login/')
 @permission_required('administrator.change_book', raise_exception=True) 
 @csrf_exempt
@@ -110,7 +110,7 @@ def change_book(request, book_id):
     return HttpResponse('Only post method allowed.')
 
 
-# we should go to admin panel and select our user and go to User permissions and select "administrator | book | Can add book" to this user can view book.
+# we should go to admin panel and select our user and go to User permissions and select "administrator | book | Can view book" to this user can view book.
 @login_required(login_url='/login/')
 @permission_required('administrator.view_book', raise_exception=True) 
 @csrf_exempt
@@ -121,7 +121,7 @@ def view_book(request, book_id):
     return HttpResponse('Only get method allowed.')
 
 
-# we should go to admin panel and select our user and go to User permissions and select "administrator | book | Can add book" to this user can delete book.
+# we should go to admin panel and select our user and go to User permissions and select "administrator | book | Can delete book" to this user can delete book.
 @login_required(login_url='/login/')
 @permission_required('administrator.delete_book', raise_exception=True) 
 @csrf_exempt
@@ -132,3 +132,17 @@ def delete_book(request, book_id):
         return HttpResponse('Book deleted successfully!')
 
     return HttpResponse('Only delete method allowed.')
+
+
+# we should go to admin panel and select our user and go to User permissions and select "administrator | book | Can make book hidden" to this user can hide book.
+@login_required(login_url='/login/')
+@permission_required('administrator.hide_book', raise_exception=True) 
+@csrf_exempt
+def hide_book(request, book_id):
+    if request.method == 'POST':
+        book = get_object_or_404(Book, id=book_id)
+        book.hidden = not book.hidden
+        book.save()
+        return HttpResponse('Done!')
+
+    return HttpResponse('Only post method allowed.')
