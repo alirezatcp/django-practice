@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
@@ -30,3 +31,11 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=50, blank=True, null=True)
     country = models.CharField(max_length=100)
+
+
+# custom User model.
+class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True) # rewrite email and add unique=True
+    country = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=50, blank=True, null=True)
+    # now we should add CustomUser to settings: AUTH_USER_MODEL = 'app_name.User_model_name'
