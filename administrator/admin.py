@@ -1,6 +1,8 @@
 from django.contrib import admin, messages
 from django.db.models import F
-from administrator.models import Author, Book
+from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
+
+from administrator.models import Author, Book, CustomUser
 
 # created a superuser with this command: python manage.py createsuperuser
 # alireza, 123, a@gmail.com
@@ -47,3 +49,29 @@ class BookAdmin(admin.ModelAdmin):
         )
 
     add_pages.short_description = 'Add two page to selected books.' # add a description to action. default is method name. (here 'Add pages'.)
+
+
+@admin.register(CustomUser)
+class CustomUserAdmin(DefaultUserAdmin):
+    fieldsets = (
+        (None, {
+            'fields': ('username', 'password')
+        }),
+        ('Personal Info', {
+            'fields': ('first_name', 'last_name', 'email', 'phone_number', 'country')
+        }),
+        ('Permissions', {
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')
+        }),
+        ('Important Dates', {
+            'fields': ('last_login', 'date_joined')
+        })
+    )
+
+    list_display = (
+        'username', 'email', 'first_name', 'last_name', 'phone_number', 'is_staff'
+    )
+
+    search_fields = (
+        'username', 'email', 'first_name', 'last_name', 'phone_number'
+    )
